@@ -44,7 +44,7 @@ void conv(vl &c,vl a, vl b) {
     	c.clear();c.resize(s,0);
 		re(i,SZZ(a)) re(j,SZZ(b))
 			c[i + j] = (c[i + j] + a[i] * b[j]) % mod;
-		return c;
+		return;
 	}
 
     a.resize(n,0); ntt(a);
@@ -53,6 +53,11 @@ void conv(vl &c,vl a, vl b) {
     lli d = modpow(n, mod-2);
 	re(i,n) c[i] = a[i] * b[i] % mod * d % mod;
 	ntt(c, true); c.resize(s);
+    for(auto &x:c)
+    {
+        if(x<0)
+            x+=mod;
+    }
 }
 
 // a*a
@@ -72,5 +77,10 @@ void conv2(vl &c,vl a) {
     lli d = modpow(n, mod-2);
 	re(i,n) c[i] = a[i] * a[i] % mod * d % mod;
 	ntt(c, true); c.resize(s);
+    for(auto &x:c)
+    {
+        if(x<0)
+            x+=mod;
+    }
 }
 }
