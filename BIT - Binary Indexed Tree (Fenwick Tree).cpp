@@ -1,8 +1,28 @@
+template<typename T>
+struct bit{
+// Ref - https://codeforces.com/contest/1208/submission/59476716
+	lli n;
+	vector<T> fen;
+	bit(): n(0) {}
+	bit(lli _n) : n(_n), fen(_n+10) {}
+	void add(lli p,T val){
+		for(;p <= n;p += p & -p)
+			fen[p] += val;
+	}
+	T sum(lli p){
+		T ans = 0;
+		for(;p > 0;p -= p & -p)
+			ans += fen[p];
+		return ans;
+	}
+};
+
+
 1D BIT:
 
-int bit[N];
+lli bit[N];
 
-void update(int idx, int val)
+void update(lli idx, lli val)
 {
 	while(idx<=n)
 	{
@@ -11,9 +31,9 @@ void update(int idx, int val)
 	}
 }
 
-int pref(int idx)
+lli pref(lli idx)
 {
-	int ans=0;
+	lli ans=0;
 	while(idx>0)
 	{
 		ans+=bit[idx];
@@ -22,7 +42,7 @@ int pref(int idx)
 	return ans;
 }
 
-int rsum(int l, int r)
+lli rsum(lli l, lli r)
 {
 	return pref(r) - pref(l-1);
 }
@@ -31,16 +51,16 @@ int rsum(int l, int r)
 
 struct BIT
 {
-	int N;
-	vector<int> bit;
+	lli N;
+	vector<lli> bit;
 
-	void init(int n)
+	void init(lli n)
 	{
 		N = n;
 		bit.assign(n + 1, 0);
 	}
 
-	void update(int idx, int val)
+	void update(lli idx, lli val)
 	{
 		while(idx <= N)
 		{
@@ -49,7 +69,7 @@ struct BIT
 		}
 	}
 
-	void updateMax(int idx, int val)
+	void updateMax(lli idx, lli val)
 	{
 		while(idx <= N)
 		{
@@ -58,9 +78,9 @@ struct BIT
 		}
 	}
 
-	int pref(int idx)
+	lli pref(lli idx)
 	{
-		int ans = 0;
+		lli ans = 0;
 		while(idx > 0)
 		{
 			ans += bit[idx];
@@ -69,14 +89,14 @@ struct BIT
 		return ans;
 	}
 
-	int rsum(int l, int r)
+	lli rsum(lli l, lli r)
 	{
 		return pref(r) - pref(l - 1);
 	}
 
-	int prefMax(int idx)
+	lli prefMax(lli idx)
 	{
-		int ans = -2e9;
+		lli ans = -2e9;
 		while(idx > 0)
 		{
 			ans = max(ans, bit[idx]);
@@ -88,9 +108,9 @@ struct BIT
 
 Multiple BIT:
 
-int bit[2][N];
+lli bit[2][N];
 
-void update(int i, int idx, int k)
+void update(lli i, lli idx, lli k)
 {
 	while(idx<=n)
 	{
@@ -99,9 +119,9 @@ void update(int i, int idx, int k)
 	}
 }
 
-int pref(int i, int idx)
+lli pref(lli i, lli idx)
 {
-	int ans=0;
+	lli ans=0;
 	while(idx>0)
 	{
 		ans+=bit[i][idx];
@@ -110,7 +130,7 @@ int pref(int i, int idx)
 	return ans;
 }
 
-int rsum(int i, int l, int r)
+lli rsum(lli i, lli l, lli r)
 {
 	return pref(i, r) - pref(i, l-1);
 }
