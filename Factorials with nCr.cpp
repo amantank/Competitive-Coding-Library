@@ -1,47 +1,35 @@
-int fact[N], invfact[N];
+const int N=1e5+5;
+const int mod=1000000007L;
+lli fac[N+5],inv[N+5];
 
-int pow(int a, int b, int m)
+lli po(lli a,lli n)
 {
-	int ans=1;
-	while(b)
-	{
-		if(b&1)
-			ans=(ans*a)%m;
-		b/=2;
-		a=(a*a)%m;
-	}
-	return ans;
+    if(n==0)
+        return 1;
+    if(n%2)
+        return (a*po(a,n-1))%mod;
+    return po(a*a%mod,n/2);
 }
 
-int modinv(int k)
+lli nCr(lli n,lli r)
 {
-	return pow(k, MOD-2, MOD);
+    if(n<0||r<0||r>n)
+        return 0;
+    lli ans=1;
+    ans=(ans*fac[n])%mod;
+    ans=(ans*inv[r])%mod;
+    ans=(ans*inv[n-r])%mod;
+    return ans;
 }
 
-void precompute()
+void pre(lli n)
 {
-	fact[0]=fact[1]=1;
-	for(int i=2;i<N;i++)
-	{
-		fact[i]=fact[i-1]*i;
-		fact[i]%=MOD;
-	}
-	invfact[N-1]=modinv(fact[N-1]);
-	for(int i=N-2;i>=0;i--)
-	{
-		invfact[i]=invfact[i+1]*(i+1);
-		invfact[i]%=MOD;
-	}
-}
-
-int nCr(int x, int y)
-{
-	if(y>x)
-		return 0;
-	int num=fact[x];
-	num*=invfact[y];
-	num%=MOD;
-	num*=invfact[x-y];
-	num%=MOD;
-	return num;
+    lli i;
+    fac[0]=1;
+    repA(i,1,n)
+        fac[i]=(i*fac[i-1])%mod;
+    inv[n]=po(fac[n],mod-2);
+    repD(i,n,1)
+        inv[i-1]=(i*inv[i])%mod;
+    assert(inv[0]==1);
 }
