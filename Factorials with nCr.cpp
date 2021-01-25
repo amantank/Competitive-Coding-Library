@@ -1,35 +1,28 @@
-const int N=1e5+5;
-const int mod=1000000007L;
-lli fac[N+5],inv[N+5];
+#include <atcoder/modint>
+using namespace atcoder;
+using mint = modint998244353;
+std::ostream& operator << (std::ostream& out, const mint& rhs) {
+        return out<<rhs.val();
+    }
 
-lli po(lli a,lli n)
-{
-    if(n==0)
-        return 1;
-    if(n%2)
-        return (a*po(a,n-1))%mod;
-    return po(a*a%mod,n/2);
-}
+// Ref - https://www.codechef.com/viewsolution/41909444 Line 827 - 850.
+const int N=2e6+5;
+array<mint,N+1> fac,inv;
 
-lli nCr(lli n,lli r)
+mint nCr(lli n,lli r)
 {
     if(n<0||r<0||r>n)
         return 0;
-    lli ans=1;
-    ans=(ans*fac[n])%mod;
-    ans=(ans*inv[r])%mod;
-    ans=(ans*inv[n-r])%mod;
-    return ans;
+    return fac[n]*inv[r]*inv[n-r];
 }
 
 void pre(lli n)
 {
-    lli i;
     fac[0]=1;
-    repA(i,1,n)
-        fac[i]=(i*fac[i-1])%mod;
-    inv[n]=po(fac[n],mod-2);
-    repD(i,n,1)
-        inv[i-1]=(i*inv[i])%mod;
-    assert(inv[0]==1);
+    for(int i=1;i<=n;++i)
+        fac[i]=i*fac[i-1];
+    inv[n]=fac[n].pow(mod-2);
+    for(int i=n;i>0;--i)
+        inv[i-1]=i*inv[i];
+    assert(inv[0]==mint(1));
 }
