@@ -1,6 +1,7 @@
 #include <atcoder/modint>
 using namespace atcoder;
-using mint = modint998244353;
+//using mint = modint998244353;
+using mint = modint1000000007;
 std::ostream& operator << (std::ostream& out, const mint& rhs) {
         return out<<rhs.val();
     }
