@@ -22,7 +22,7 @@ void pre(lli n)
     fac[0]=1;
     for(int i=1;i<=n;++i)
         fac[i]=i*fac[i-1];
-    inv[n]=fac[n].pow(mod-2);
+    inv[n]=fac[n].pow(mint(-2).val());
     for(int i=n;i>0;--i)
         inv[i-1]=i*inv[i];
     assert(inv[0]==mint(1));
